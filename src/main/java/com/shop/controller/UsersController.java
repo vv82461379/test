@@ -21,7 +21,7 @@ import com.shop.model.Users;
 import com.shop.service.UserService;
 
 /**
- * 在这里加了 @ResponseBody则springmvc的拼接跳转页面失效，因为默认返回html的格式。 
+ * 在这里加了 @ResponseBody则springmvc的拼接跳转页面失效，因为默认返回html的格式。
  * @author garen_li
  *
  */
