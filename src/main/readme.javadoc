@@ -1,0 +1,62 @@
+1、controller 中请求用HttpServletRequest,返回可以是多种格式，例如Map,HttpServletResponse,
+  HttpServletRequest,Model等,Spring会自动new出一个相应的对象返回给前端。
+2、同一个tomcat部署不同项目，需要改变端口号，在左侧Services中的server.xml配置端口号,而在SpringBoot中可以通过
+  application.properties里面配置端口号。说回来,正常的项目在Servers中Modules中选中项目,把Path设为空
+     ，就可以去除项目名。
+3、在spring-mvc.xml文件中可以配置跳转，类似Structs2。属性为 class="org.springframework.web.servlet.view.InternalResourceViewResolver
+      前缀，后缀，在controller的函数中return的字符串加前后缀就是跳转页面的地址。
+4、有关token，正常是后台处理，判断，存在缓存中，每次检查。
+5、排序最好单独设置一个字段，以免接口复用性太大，排序规则太多，造成逻辑混乱。
+6、先从redis里查询数据，如果没有再从数据库中查询，redis里面的数据设置过期时间，以免脏数据过多。
+7、如果controller中要返回json数据，只需要在controller上加标签@ResponseBody就行了。
+8、select * from user where username like '%${value}%'。
+      然而用#{},则需要select * from user where username like "%"#{value}"%"。
+9、resultMap在mapper.xml中设置键值，是个全局的，不用在每个sql语句中写。
+10、com.google.zxing 这个包实现的是二维码功能。
+11、在pom.xml中搭建4种环境，利用resources和profiles。
+12、poi可以实现excel的导入导出。
+    <!-- apahce poi -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-examples</artifactId>
+      <version>3.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-scratchpad</artifactId>
+      <version>3.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.7</version>
+    </dependency>
+13、eclipse出现加载java Tool工具错误时候，解决方法：点击window->perspective->Rest perpestive就解决了，
+	不要删除.metadata\.plugins\org.eclipse.core.resources下的.project文件，删除了的话会对项目有影响。
+14、aop依赖包
+	 <dependency>  
+    <groupId>org.aspectj</groupId>  
+    <artifactId>aspectjrt</artifactId>  
+    <version>1.8.9</version>  
+</dependency>  
+<dependency>  
+    <groupId>org.aspectj</groupId>  
+    <artifactId>aspectjweaver</artifactId>  
+    <version>1.8.9</version>  
+    <scope>runtime</scope>  
+</dependency>  
+
+例子，在aop里。如果是对某个类的所有方法代理用：execution(* com.shop.service.UserService.*(..))
+如果是对某个类的某个方法代理用：execution(* com.shop.service.UserService.queryById(..))
+其中*是返回任意类型。
+在spring里要配置
+<aop:aspectj-autoproxy>
+   		
+   </aop:aspectj-autoproxy>
+    <bean class="com.shop.aop.UsersAop"></bean>
+    上面是启动AspectJ自动代理，下面是声明Aop代理的类。
