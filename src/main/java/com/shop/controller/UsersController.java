@@ -63,7 +63,7 @@ public class UsersController {
 	   * @param model
 	   * @return
 	   */
-	  
+	   
 	  @RequestMapping("/print")
 	    public void queryByCondition(@RequestBody Users users,Model model){
 			System.out.println(users.getId());
