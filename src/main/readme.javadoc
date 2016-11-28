@@ -60,3 +60,8 @@
    </aop:aspectj-autoproxy>
     <bean class="com.shop.aop.UsersAop"></bean>
     上面是启动AspectJ自动代理，下面是声明Aop代理的类。
+    
+ 15、添加多种环境：测试，发布，生产等。要在pom文件里添加profiles，添加四种。
+ 	在pom中，build->resources中配置源文件位置，再在plugin中配置tomcat-maven-plugin插件。
+ 	选择的时候右键项目->maven->select maven profiles选择对应的发布环境。
+ 	具体描述在：http://blog.csdn.net/mhmyqn/article/details/24501281
