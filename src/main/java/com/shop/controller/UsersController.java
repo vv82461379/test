@@ -5,17 +5,14 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.model.Users;
 import com.shop.service.UserService;
@@ -42,8 +39,13 @@ public class UsersController {
 	       //model不需要返回
 	        model.addAttribute("users", users);
 	        return "selectStu";
-	        
 	  }
+	  
+	  @RequestMapping("/save")
+	  public void save(Users users){
+		  userService.save(users);
+	  }
+	  
 	  //通过form获取一条一条数据，按属性获取
 	  @RequestMapping("/print1")
 	  public void prit1(@RequestParam("id") Long id,Model model){

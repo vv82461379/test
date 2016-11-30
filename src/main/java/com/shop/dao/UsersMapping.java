@@ -8,6 +8,8 @@ public interface UsersMapping {
 	
 	
 	public Users queryById(Long id);
+	
+	public void save(Users users);
 
 
 }

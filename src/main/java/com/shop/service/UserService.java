@@ -1,6 +1,5 @@
 package com.shop.service;
 
-
 import com.shop.model.Users;
 
 public interface UserService{
@@ -9,6 +8,8 @@ public interface UserService{
     public Users queryById(Long id);
     
     public void print();
+    
+    public void save(Users users);
 
     
 }

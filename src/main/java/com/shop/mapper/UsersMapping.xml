@@ -6,11 +6,18 @@
     <select id="queryById" parameterType="Long" resultType="com.shop.model.Users">
         select ID id, ACCOUNT account, TENANT_ID tenantId, MEMBER_NAME memberName, PASSWORD password, TENANT_NAME tenantName, ADDRESS address, ADDRESS_ID addressId,
                GENDER gender, POSITION position, MAIL_ADDRESS mailAddress, QQ qq, WECHAT wechat, JOB_NUMBER jobNumber, PORTRAIT portrait, TELEPHONE telephone, FAX fax,
-               DEL_FLAG delFlag, CREATE_TIME createTime, UPDATE_TIME updateTime, IS_ADMIN isAdmin,LOGIN_FROM loginFrom
+               DEL_FLAG delFlag, CREATE_TIME createTime, UPDATE_TIME updateTime, IS_ADMIN isAdmin
         From USERS
         Where ID = #{id} AND DEL_FLAG = 0
 
     </select>
+    
+    <insert id="save" parameterType="com.shop.model.Users">
+    	  Insert into USERS (ID, ACCOUNT, TENANT_ID, MEMBER_NAME, PASSWORD, TENANT_NAME, ADDRESS, ADDRESS_ID,
+        GENDER, POSITION, MAIL_ADDRESS, QQ, WECHAT, JOB_NUMBER, PORTRAIT, TELEPHONE, FAX, DEL_FLAG, IS_ADMIN)
+        Values (#{id}, #{account}, #{tenantId}, #{memberName}, #{password},#{tenantName},#{address},#{addressId},
+        1,#{position},#{mailAddress},#{qq},#{wechat},#{jobNumber}, #{portrait}, #{telephone}, #{portrait}, 0, 1)
+    </insert>
 
   
 </mapper>
