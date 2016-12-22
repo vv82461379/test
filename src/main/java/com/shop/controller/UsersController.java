@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.shop.annotation.TokenValid;
 import com.shop.model.Users;
 import com.shop.service.UserService;
 
@@ -42,6 +43,7 @@ public class UsersController {
 	  }
 	  
 	  @RequestMapping("/save")
+	  @TokenValid
 	  public void save(Users users){
 		  userService.save(users);
 	  }
