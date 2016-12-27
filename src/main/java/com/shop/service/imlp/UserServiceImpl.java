@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shop.annotation.TokenValid;
 import com.shop.dao.UsersMapping;
 import com.shop.model.Users;
 import com.shop.service.UserService;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService{
 	/**
 	 * 只需要在类上添加@Transactional，就相当于增加了事务功能，如果抛出异常，则事务回滚。
 	 */
+	@TokenValid
 	public void save(Users users){
 		usersMapping.save(users);
 		System.out.println("transcation start......................");

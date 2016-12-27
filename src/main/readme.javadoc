@@ -65,3 +65,5 @@
  	在pom中，build->resources中配置源文件位置，再在plugin中配置tomcat-maven-plugin插件。
  	选择的时候右键项目->maven->select maven profiles选择对应的发布环境。
  	具体描述在：http://blog.csdn.net/mhmyqn/article/details/24501281
+ 	
+ 	16、自定义注解注释在controller层是无效的，要注解在service层可以生效。可能是因为只把service生成了bean注册到了spring 容器中

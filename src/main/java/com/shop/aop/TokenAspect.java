@@ -1,6 +1,10 @@
 package com.shop.aop;
 
-import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,7 +12,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+
+import com.ehsy.cloudshop.common.annotation.TokenValid;
+import com.shop.model.Users;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 /**
@@ -17,7 +26,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Aspect  
-@Component 
+
 public class TokenAspect {
 	
 	 private static final Logger logger = LoggerFactory.getLogger(TokenAspect.class); 
@@ -25,15 +34,15 @@ public class TokenAspect {
 	 /** 
      * 定义拦截规则：拦截com.xjj.web.controller包下面的所有类中，有@RequestMapping注解的方法。 
      */  
-    @Pointcut("execution(* @annotation(com.ehsy.cloudshop.common.annotation.TokenValid)")  
+    @Pointcut("@annotation(com.shop.annotation.TokenValid)")  
     public void tokenValidPointcut(){}  
-	 
+	
 	/**
 	 * tokenValid注解的aop实现
 	 * 验证是否是合法的token
 	 * @param joinPoint
 	 */
-    @Around("controllerMethodPointcut()") 
+    @Around("tokenValidPointcut()") 
 	public void isAccessMethod(ProceedingJoinPoint joinPoint) throws Throwable{
 		 
     	boolean isAccess = false;
@@ -45,8 +54,33 @@ public class TokenAspect {
 		String methodName = joinPoint.getSignature().getName();
 		logger.info("{}方法开始验证Token.................",methodName);
 		//得到该方法的参数
-		Object[] args = joinPoint.getArgs();  
-		System.out.println("size："+ args.length +"!!!!!"+args);
+		Object[] args = joinPoint.getArgs();
+		Object obj= args[0];
+		Class className = Arrays.asList(args).get(0).getClass();
+	 
+		 Field[] field = className.getDeclaredFields(); // 获取实体类的所有属性，返回Field数组
+		 try{
+			   for (int j = 0; j < field.length; j++){
+			   
+				 String nameold = field[j].getName(); // 获取属性的名字
+	             String name = nameold.substring(0, 1).toUpperCase() + nameold.substring(1); // 将属性的首字符大写，方便构造get，set方法
+	             String type = field[j].getGenericType().toString(); // 获取属性的类型
+	             if(nameold.equals("id")){
+	            	 System.out.println("id:");
+	            	  Method m = className.getMethod("get" + name);
+	                    Long value = (Long) m.invoke(obj); // 调用getter方法获取属性值
+	                    System.out.println(value);
+	             }
+			   }
+             
+		 }catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
+		Users users = (Users)args[0];
+		System.out.println(users);
 		
 		
 		
@@ -61,4 +95,23 @@ public class TokenAspect {
 			 
 		   
 		 }
+    
+    
+    
+    public static String parse(Class targetClass, String methodName) throws Exception {
+        String token = "";
+        /*
+         * 为简单起见，这里考虑该方法没有参数
+         */
+        Method method = targetClass.getMethod(methodName);
+        //判断方法上是否有Privilege注解
+        if (method.isAnnotationPresent(TokenValid.class)) {
+            //得到方法上的注解
+            TokenValid tokenValid = method.getAnnotation(TokenValid.class);
+            token = tokenValid.value();
+        }
+        return token;
+    }
+    
+   
 }

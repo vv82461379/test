@@ -43,7 +43,6 @@ public class UsersController {
 	  }
 	  
 	  @RequestMapping("/save")
-	  @TokenValid
 	  public void save(Users users){
 		  userService.save(users);
 	  }
