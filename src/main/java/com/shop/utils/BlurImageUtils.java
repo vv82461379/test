@@ -18,7 +18,7 @@ public class BlurImageUtils {
 	public static void main(String[] args) throws IOException {
 	    BufferedImage img = ImageIO.read(new File("d:/c.jpg"));
 	    long start = System.currentTimeMillis();
-	    img = blur(img, 15);
+	    img = blur(img, 15);								//后面的参数为设置模糊度，越大越模糊
 	    long end = System.currentTimeMillis();
 	    ImageIO.write(img, "jpeg", new File("e:/test.jpeg"));//保存为test.jpeg文件
 	    System.out.println("花费时间："+(end-start));
