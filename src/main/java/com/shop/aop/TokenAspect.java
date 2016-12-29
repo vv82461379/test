@@ -13,7 +13,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ehsy.cloudshop.common.annotation.TokenValid;
 import com.shop.model.Users;
 
 import net.sf.json.JSONArray;
@@ -97,21 +96,6 @@ public class TokenAspect {
 		 }
     
     
-    
-    public static String parse(Class targetClass, String methodName) throws Exception {
-        String token = "";
-        /*
-         * 为简单起见，这里考虑该方法没有参数
-         */
-        Method method = targetClass.getMethod(methodName);
-        //判断方法上是否有Privilege注解
-        if (method.isAnnotationPresent(TokenValid.class)) {
-            //得到方法上的注解
-            TokenValid tokenValid = method.getAnnotation(TokenValid.class);
-            token = tokenValid.value();
-        }
-        return token;
-    }
     
    
 }
