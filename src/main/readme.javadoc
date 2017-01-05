@@ -67,3 +67,16 @@
  	具体描述在：http://blog.csdn.net/mhmyqn/article/details/24501281
  	
  	16、自定义注解注释在controller层是无效的，要注解在service层可以生效。可能是因为只把service生成了bean注册到了spring 容器中
+ 	
+ 	17、aspect中around与before，afterReturning等不能同时使用，否则afterReturning这些切面方法失效。同时，在around中用的是ProceedingJoinPoint，
+ 	而在其他的里面使用的是JoinPoint。例如：
+ 	@Around("tokenValidPointcut()") 
+ 	public void isAccessMethod(ProceedingJoinPoint joinPoint) throws Throwable{}
+ 	
+ 	@Before("loggerAnnotationPointcut()") 
+	 public void isAccessMethod(JoinPoint joinPoint) throws Throwable{}
+	 
+	 
+	 @AfterReturning(returning = "result", pointcut = "loggerAnnotationPointcut()") 
+	 public void doAfterReturning(JoinPoint joinPoint,Object result){}
+	 这里的returning是方法执行结束的返回值。

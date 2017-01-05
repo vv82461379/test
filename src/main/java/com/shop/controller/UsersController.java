@@ -10,6 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,14 +32,19 @@ public class UsersController {
 	@Autowired
 	private UserService userService;
 	
-	  @RequestMapping("/test")
-	    public String queryByCondition(@RequestParam("id") String id,Model model){
+	/**
+	 * 这是restful风格，@RequestMapping中的{xv}要与@PathVariable("xv")的xv相同，才能获取到，String id则不必相同，会自动将变量xv赋值给id。
+	 * @param id
+	 * @return
+	 */
+	  @RequestMapping("/test/{xv}")
+	    public String queryByCondition(@PathVariable("xv") String id){
 		  Long userId=Long.parseLong(id);
 	        System.out.println(userId);
 	        System.out.println("begin");
 	        Users users = userService.queryById(userId);
 	       //model不需要返回
-	        model.addAttribute("users", users);
+//	        model.addAttribute("users", users);
 	        return "selectStu";
 	  }
 	  
@@ -62,6 +68,7 @@ public class UsersController {
 	   * 获取json形式的对象,@RequestBody会根据请求头中header的Content-Type类型判断
 	   * 在postman中header中放入Content-Type   application/json
 	   * 在body的row中输入{"id":1}就会在对象中自动匹配id=1通过users.getId()获得.
+	   * 解析json只能是bean对象才行，例如Users，如果是参数，例如userId等则获取不到前端的值。
 	   * @param users
 	   * @param model
 	   * @return
@@ -70,6 +77,10 @@ public class UsersController {
 	  @RequestMapping("/print")
 	    public void queryByCondition(@RequestBody Users users,Model model){
 			System.out.println(users.getId());
+	  }
+	  @RequestMapping("/paramtest")
+	    public void paramtest(@RequestBody Integer userId){
+			System.out.println(userId);
 	  }
 	  
 	  /**
