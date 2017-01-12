@@ -29,6 +29,19 @@
             </list>
         </property>
     </bean>
+    
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+    <property name="messageConverters">   
+       <list>   
+           <bean class = "org.springframework.http.converter.StringHttpMessageConverter">   
+              <constructor-arg type="java.nio.charset.Charset">
+                    <value>UTF-8</value>
+              </constructor-arg> 
+           </bean>
+       </list>   
+    </property>
+</bean>
+    
 <!-- 使用数据库连接池  配置数据源 -->
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"        
         destroy-method="close">        

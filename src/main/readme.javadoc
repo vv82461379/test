@@ -80,3 +80,4 @@
 	 @AfterReturning(returning = "result", pointcut = "loggerAnnotationPointcut()") 
 	 public void doAfterReturning(JoinPoint joinPoint,Object result){}
 	 这里的returning是方法执行结束的返回值。
+	 18、加入@RequestBody则不能使用get方法，这个会解析json
