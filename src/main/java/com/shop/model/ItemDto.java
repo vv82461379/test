@@ -2,7 +2,6 @@ package com.shop.model;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.function.DoubleBinaryOperator;
 
 public class ItemDto implements Serializable {
 
